@@ -1,5 +1,5 @@
 import { pb, type Quote } from '$lib/pocketbase';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 export let load = (async () => {
     const result = await pb.collection('quotes').getList();
@@ -9,3 +9,13 @@ export let load = (async () => {
         quotes
     }
 }) satisfies PageServerLoad;
+
+export const actions = {
+    addQuote: async ({ request }) => {
+        const data = await request.formData();
+        const book = data.get('book');
+        const text = data.get('text');
+        const record = await pb.collection('quotes').create({ book, text });
+        return JSON.parse(JSON.stringify(record)) as Quote;
+    }
+} satisfies Actions;
