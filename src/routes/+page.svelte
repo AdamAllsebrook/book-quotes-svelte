@@ -13,8 +13,10 @@
 </script>
 
 <div class="flex">
-	<main class="max-w-[70ch] min-w-full lg:min-w-[70ch] mx-auto flex flex-col border-x-2">
-		<h1 class="text-2xl mx-auto py-4">Book Quotes</h1>
+	<main
+		class="mx-auto flex min-w-full max-w-[70ch] flex-col border-x-2 border-surface-200 lg:min-w-[70ch]"
+	>
+		<h1 class="mx-auto py-4 text-2xl">Book Quotes</h1>
 		<QuoteForm on:addQuote={addQuote} />
 		<div class="p-4">
 			{#each quotes as quote}

@@ -15,15 +15,20 @@
 			}
 		};
 	}}
-	class="space-y-5 flex flex-col border-y-2 p-4"
+	class="flex flex-col space-y-5 border-y-2 border-surface-200 p-4"
 >
 	<div class="flex flex-col">
-		<label for="book">Book</label>
-		<input type="text" name="book" placeholder="Book" />
+		<label for="book" class="label">Book</label>
+		<input type="text" name="book" placeholder="The Two Towers" class="input" />
 	</div>
 	<div class="flex flex-col">
-		<label for="text">Quote</label>
-		<input type="text" name="text" placeholder="Quote" />
+		<label for="text" class="label">Quote</label>
+		<input
+			type="text"
+			name="text"
+			placeholder="There is some good in this world, and it’s worth fighting for."
+			class="input"
+		/>
 	</div>
-	<button type="submit">Publish Quote</button>
+	<button type="submit" class="btn variant-filled self-center">Publish Quote</button>
 </form>
