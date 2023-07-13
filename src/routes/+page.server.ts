@@ -17,5 +17,8 @@ export const actions = {
         const text = data.get('text');
         const record = await pb.collection('quotes').create({ book, text });
         return JSON.parse(JSON.stringify(record)) as Quote;
+    },
+    logout: async () => {
+        pb.authStore.clear();
     }
 } satisfies Actions;
