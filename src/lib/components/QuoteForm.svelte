@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -13,6 +13,7 @@
 			if (result.type === 'success') {
 				dispatch('addQuote', result.data);
 			}
+			await applyAction(result);
 		};
 	}}
 	class="flex flex-col space-y-5 border-y-2 border-surface-200 p-4"

@@ -1,12 +1,22 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
+	import { pb } from '$lib/pocketbase';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
 </script>
 
 <div class="flex h-full flex-col items-center justify-center">
-	<form method="POST" action="?/login" use:enhance class="flex flex-col space-y-5">
+	<form
+		method="POST"
+		use:enhance={() => {
+			return async ({ result }) => {
+				pb.authStore.loadFromCookie(document.cookie);
+				await applyAction(result);
+			};
+		}}
+		class="flex flex-col space-y-5"
+	>
 		{#if form?.success}
 			<p>Welcome back, user</p>
 		{:else}
@@ -22,6 +32,7 @@
 				<label for="password" class="label">Password</label>
 				<input type="password" name="password" id="password" class="input" />
 			</div>
+			<p>Not signed up? <a href="/auth/signup" class="anchor">Create an account</a></p>
 			<button type="submit" class="btn variant-filled self-center">Login</button>
 		{/if}
 	</form>

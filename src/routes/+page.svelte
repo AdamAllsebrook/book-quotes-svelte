@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { applyAction, enhance } from '$app/forms';
 	import Quote from '$lib/components/Quote.svelte';
 	import QuoteForm from '$lib/components/QuoteForm.svelte';
-	import type { Quote as TQuote } from '$lib/pocketbase';
+	import { type Quote as TQuote, currentUser, pb } from '$lib/pocketbase';
+	import { toastStore } from '@skeletonlabs/skeleton';
 
 	export let data;
 	let quotes = data.quotes;
@@ -18,8 +20,23 @@
 	>
 		<div class="flex justify-between px-4">
 			<h1 class="py-4 text-2xl">Book Quotes</h1>
-			{#if data.userIsValid}
-				<form method="POST" action="?/logout" class="flex">
+			{#if $currentUser}
+				<form
+					method="POST"
+					action="/auth/logout"
+					use:enhance={() => {
+						return async ({ result }) => {
+							pb.authStore.clear();
+							const t = {
+								background: 'variant-filled-success',
+								message: 'Signed out.'
+							};
+							toastStore.trigger(t);
+							await applyAction(result);
+						};
+					}}
+					class="flex"
+				>
 					<button type="submit" class="hover:underline">Sign Out</button>
 				</form>
 			{:else}
